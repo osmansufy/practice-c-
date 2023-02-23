@@ -18,9 +18,14 @@ class Stack
 {
     Node *head;
     Node *Top;
-    int sizeOfLinkedList = 0;
 
 public:
+    int sizeOfLinkedList = 0;
+    Stack()
+    {
+        head = NULL;
+        Top = NULL;
+    }
     // Push
     void push(int value)
     {
@@ -42,28 +47,31 @@ public:
     }
     // Pop
 
-    int Pop()
+    int pop()
     {
 
-        Node *deleteNode = Top;
+        Node *delNode;
+        delNode = Top;
+        int chk=1;
+        // there is No element in the Stack
+
         if (head == NULL)
         {
-
-            cout << "Stack is UnderFlow" << endl;
-            return -1;
+            cout << "Stack Underflow";
         }
-        if (head == Top)
+        if (Top == head) // There is only one element
         {
             head = Top = NULL;
         }
-        else
+        else // There is More then one element
         {
-            Top = deleteNode->prev;
+            Top = delNode->prev;
             Top->next = NULL;
         }
-        delete deleteNode;
+        chk = delNode->value;
+        delete delNode;
         sizeOfLinkedList--;
-        return deleteNode->value;
+        return chk;
     }
 
     // isEMpty
