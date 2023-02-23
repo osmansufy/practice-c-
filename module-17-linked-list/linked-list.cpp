@@ -254,7 +254,7 @@ void makeCycle(Node *&head, int position)
     }
     temp->next = startNode;
 }
-Node *detectCycle(Node *&head)
+bool detectCycle(Node *&head)
 {
     if (!head || !head->next)
         return NULL;
@@ -272,21 +272,35 @@ Node *detectCycle(Node *&head)
             break;
         }
     }
-    if (meet == false)
-        return NULL;
-    // step2 reinitialize fast to first index
-    fast = head;
 
-    // step3 loop until fast==slow-
+    return meet;
+}
 
-    while (fast != slow)
+void removeCycle(Node *&head)
+{
+
+    Node *slow = head;
+    Node *fast = head;
+
+    // step 1 set slow=fast
+    do
     {
         slow = slow->next;
+        fast = fast->next->next;
+    } while (slow != fast);
+
+    // step 2 re initialization of fast
+
+    fast = head;
+    while (fast->next != slow->next)
+    {
         fast = fast->next;
+        slow = slow->next;
     }
 
-    cout << "Cycle are detected at " << slow->value << endl;
-    return slow;
+    //  step 3 set slow next to null
+
+    slow->next = NULL;
 }
 int main()
 {
@@ -305,6 +319,10 @@ int main()
          << "Choice 9: Deletion at a Specific Position" << endl
          << "Choice 10: Deletion by value" << endl
          << "Choice 11:Reversal Of List Non-recursive" << endl
+         << "Choice 12:Find mid (with slow faster method)" << endl
+         << "Choice 13:Make Cycle at desired position" << endl
+         << "Choice 14:Detect cycle" << endl
+         << "Choice 15:Remove cycle" << endl
          << "Choice 0:Exit" << endl;
 
     cout << "Next Choice: ";
@@ -371,9 +389,28 @@ int main()
             makeCycle(head, position);
             break;
         case 14:
-            detectCycle(head);
+            if (detectCycle(head) == true)
+            {
+                cout << "There is a cycle" << endl;
+            }
+            else
+            {
+                cout << "There is no cycle" << endl;
+            }
 
             break;
+        case 15:
+            if (detectCycle(head) == true)
+            {
+                removeCycle(head);
+            }
+            else
+            {
+                cout << "There is no cycle" << endl;
+            }
+
+            break;
+
         default:
             break;
         }
