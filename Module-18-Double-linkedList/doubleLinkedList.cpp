@@ -156,6 +156,28 @@ int countNodes(DoubleNode *head)
     return count;
 }
 
+// find Mid of linked list
+
+int findMid(DoubleNode *&head)
+{
+    // Case 1:head is empty
+
+    if (head == NULL)
+    {
+        return -1;
+    }
+
+    DoubleNode *slow = head;
+    DoubleNode *fast = head;
+
+    while (fast != NULL && fast->next != NULL)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    return slow->value;
+}
 int main()
 {
 
@@ -173,6 +195,7 @@ int main()
          << "Choice 9: Deletion at a Specific Position" << endl
          << "Choice 10: Deletion by value" << endl
          << "Choice 11:Reversal Of List Non-recursive" << endl
+         << "Choice 12:Finding The Mid (Slow-fast pointer method)" << endl
          << "Choice 0:Exit" << endl;
 
     cout << "Next Choice: " << endl;
@@ -217,14 +240,32 @@ int main()
             printList(head);
             break;
         case 7:
+        {
             cout << "Enter the position: " << endl;
             cin >> position;
             deleteAtSpecificPosition(head, position);
             printList(head);
             break;
+        }
+        case 12:
+        {
+            int mid = findMid(head);
+            if (mid == -1)
+            {
+                cout << "The LL is empty" << endl;
+            }
+            else
+            {
+                cout << "Mid value is " << mid << endl;
+            }
+
+            break;
+        }
         default:
+        {
             cout << "Invalid Choice" << endl;
             break;
+        }
         }
         cout << "Next Choice: " << endl;
         cin >> choice;
