@@ -52,7 +52,7 @@ public:
 
         Node *delNode;
         delNode = Top;
-        int chk=1;
+        int chk=-1;
         // there is No element in the Stack
 
         if (head == NULL)

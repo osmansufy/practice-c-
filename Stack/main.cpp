@@ -9,9 +9,10 @@ int main(){
     st.push(100);
     st.push(15);
 
-
+ cout <<st.sizeOfLinkedList<<endl;
  while(!st.isEmpty()){
        cout<<st.pop()<<endl;
  }
+ cout <<st.sizeOfLinkedList<<endl;
     return 0 ;
 ;}
