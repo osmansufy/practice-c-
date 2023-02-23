@@ -131,6 +131,163 @@ void display(Node *head)
     cout << endl;
 }
 
+void insertionAfterValue(Node *&head, int value, int key)
+{
+    Node *newNode = new Node();
+    newNode->value = value;
+
+    Node *temp = head;
+    while (temp->value != key)
+    {
+        temp = temp->next;
+    }
+    newNode->next = temp->next;
+    temp->next = newNode;
+}
+void deleteAtHead(Node *&head)
+{
+    Node *temp = head;
+    head = head->next;
+    delete temp;
+}
+void deleteAtTail(Node *&head)
+{
+    Node *temp = head;
+    while (temp->next->next != NULL)
+    {
+        temp = temp->next;
+    }
+    delete temp->next;
+    temp->next = NULL;
+}
+void deleteAtSpecificPosition(Node *&head, int position)
+{
+    Node *temp = head;
+    int i = 1;
+    while (i < position - 1)
+    {
+        temp = temp->next;
+        i++;
+    }
+    Node *temp2 = temp->next;
+    temp->next = temp2->next;
+    delete temp2;
+}
+void deleteSpecificValue(Node *&head, int key)
+{
+    Node *temp = head;
+    while (temp->next->value != key)
+    {
+        temp = temp->next;
+    }
+    Node *temp2 = temp->next;
+    temp->next = temp2->next;
+    delete temp2;
+}
+
+Node *reversalNonRecursive(Node *&head)
+{
+    Node *prev = NULL;
+    Node *current = head;
+    Node *Next = head->next;
+    while (true)
+    {
+        current->next = prev;
+        prev = current;
+        current = Next;
+        if (current->next == NULL)
+            break;
+        Next = current->next;
+    }
+    return prev;
+}
+Node *reverseWithRecursive(Node *&head)
+{
+
+    // Base Call
+    if (head->next == NULL)
+    {
+        return head;
+    }
+
+    // recursive call
+    Node *newHead = reverseWithRecursive(head->next);
+    head->next->next = head;
+    head->next = NULL;
+
+    return newHead;
+}
+
+int findMid(Node *&head)
+{
+    Node *slow = head;
+    Node *fast = head;
+    if (head == NULL)
+    {
+        return -1;
+    }
+    while (fast != NULL && fast->next != NULL)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    return slow->value;
+}
+
+void makeCycle(Node *&head, int position)
+{
+
+    Node *temp = head;
+    Node *startNode;
+
+    int count = 1;
+
+    while (temp->next != NULL)
+    {
+        if (count == position)
+        {
+            startNode = temp;
+        }
+        temp = temp->next;
+        count++;
+    }
+    temp->next = startNode;
+}
+Node *detectCycle(Node *&head)
+{
+    if (!head || !head->next)
+        return NULL;
+    Node *slow = head;
+    Node *fast = head;
+    bool meet = false;
+    // step 1 to check is there any cycle in list
+    while (fast != NULL && fast->next != NULL)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast)
+        {
+            meet = true;
+            break;
+        }
+    }
+    if (meet == false)
+        return NULL;
+    // step2 reinitialize fast to first index
+    fast = head;
+
+    // step3 loop until fast==slow-
+
+    while (fast != slow)
+    {
+        slow = slow->next;
+        fast = fast->next;
+    }
+
+    cout << "Cycle are detected at " << slow->value << endl;
+    return slow;
+}
 int main()
 {
     Node *head = NULL;
@@ -142,8 +299,15 @@ int main()
          << "Choice 3:Insertion at specific position" << endl
          << "Choice 4:Search a specific value" << endl
          << "Choice 5:Search duplicate value" << endl
+         << "Choice 6: Insertion after a specific value" << endl
+         << "Choice 7: Deletion at Head" << endl
+         << "Choice 8: Deletion at Tail" << endl
+         << "Choice 9: Deletion at a Specific Position" << endl
+         << "Choice 10: Deletion by value" << endl
+         << "Choice 11:Reversal Of List Non-recursive" << endl
          << "Choice 0:Exit" << endl;
 
+    cout << "Next Choice: ";
     cin >> choice;
 
     while (choice != 0)
@@ -188,7 +352,28 @@ int main()
             cin >> value;
             searchDuplicateValue(head, value);
             break;
+        case 11:
 
+            head = reversalNonRecursive(head);
+
+            break;
+
+        case 12:
+            int midNodeValue;
+            midNodeValue = findMid(head);
+
+            cout << "Mid value of the linked list: " << midNodeValue << endl;
+
+            break;
+        case 13:
+            cout << "Enter the Desired position to create cycle" << endl;
+            cin >> position;
+            makeCycle(head, position);
+            break;
+        case 14:
+            detectCycle(head);
+
+            break;
         default:
             break;
         }
