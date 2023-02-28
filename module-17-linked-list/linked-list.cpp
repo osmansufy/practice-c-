@@ -189,7 +189,7 @@ Node *reversalNonRecursive(Node *&head)
 {
     Node *prev = NULL;
     Node *current = head;
-    Node *Next = head->next;
+    Node *Next = current->next;
     while (true)
     {
         current->next = prev;
