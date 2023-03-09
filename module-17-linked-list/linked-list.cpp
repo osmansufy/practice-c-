@@ -201,6 +201,25 @@ Node *reversalNonRecursive(Node *&head)
     }
     return prev;
 }
+
+Node *sortWithRecursion(Node *&head)
+{
+
+    // 4->2->1->3
+    Node *current = head;    // 4
+    Node *Next = head->next; // 2
+
+    while (current->value > Next->value)
+    {
+        // 4->1->3
+        current->next = Next->next;
+        // 2->4->1->3
+        Next->next = current;
+        current = current->next;
+        Next = current->next;
+    }
+    return current;
+}
 Node *reverseWithRecursive(Node *&head)
 {
 
@@ -323,6 +342,7 @@ int main()
          << "Choice 13:Make Cycle at desired position" << endl
          << "Choice 14:Detect cycle" << endl
          << "Choice 15:Remove cycle" << endl
+         << "Choice 16:Sort" << endl
          << "Choice 0:Exit" << endl;
 
     cout << "Next Choice: ";
@@ -408,6 +428,10 @@ int main()
             {
                 cout << "There is no cycle" << endl;
             }
+
+            break;
+        case 16:
+            sortWithRecursion(head);
 
             break;
 

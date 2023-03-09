@@ -7,24 +7,46 @@ using namespace std;
 
 map<int, int> frequencyMap;
 
-void countUniqueNumber(vector<int> &arr)
-{
+// void countUniqueNumber(vector<int> &arr)
+// {
 
+//     for (int i = 0; i < arr.size(); i++)
+//     {
+//         int val = arr.at(i);
+//         frequencyMap[val] = frequencyMap[val] + 1;
+//     }
+
+//     // create iterator
+//     map<int, int>::iterator iter;
+//     cout << "Frequency of the unique numbers " << endl;
+//     for (iter = frequencyMap.begin(); iter != frequencyMap.end(); iter++)
+//     {
+//         cout << (*iter).first << " " << (*iter).second << endl;
+//     }
+// }
+bool uniqueOccurrences(vector<int> &arr)
+{
+    map<int, int> frequencyMap;
     for (int i = 0; i < arr.size(); i++)
     {
         int val = arr.at(i);
         frequencyMap[val] = frequencyMap[val] + 1;
     }
-
-    // create iterator
-    map<int, int>::iterator iter;
-    cout << "Frequency of the unique numbers " << endl;
-    for (iter = frequencyMap.begin(); iter != frequencyMap.end(); iter++)
+    for (auto it = frequencyMap.begin(); it != frequencyMap.end(); ++it)
     {
-        cout << (*iter).first << " " << (*iter).second << endl;
+        auto nextIt = it;
+        ++nextIt;
+        while (nextIt != frequencyMap.end())
+        {
+            if (it->second == nextIt->second)
+            {
+                return true;
+            }
+            ++nextIt;
+        }
     }
+    return frequencyMap.size() == arr.size();
 }
-
 int main()
 {
     int size;
@@ -39,6 +61,6 @@ int main()
         uniqueNumbers.push_back(item);
     }
 
-    countUniqueNumber(uniqueNumbers);
+    uniqueOccurrences(uniqueNumbers);
     return 0;
 }
